@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI vs Energy Dashboard - US Air Quality & Energy Consumption</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header class="banner">
+        <div class="banner-content">
+            <h1>🌪️ US Air Quality & Energy Consumption Dashboard</h1>
+            <p class="banner-subtitle">Exploring environmental trends across American states (1980-2022)</p>
+        </div>
+    </header>
+
+    <nav class="navbar-sticky">
+        <div class="navbar">
+            <ul class="navbar-links">
+                <li class="navbar-item">
+                    <a href="index.html" class="navbar-link">Home</a>
+                </li>
+                <li class="navbar-item dropdown">
+                    <a href="#" class="navbar-link active">Dashboards ▾</a>
+                    <div class="dropdown-content">
+                        <a href="dashboard-aqi-energy.html" class="dropdown-link active">
+                            🌱 AQI vs Energy
+                        </a>
+                        <a href="dashboard-trends.html" class="dropdown-link">
+                            📈 Trends Analysis
+                        </a>
+                    </div>
+                </li>
+                <li class="navbar-item dropdown">
+                    <a href="#" class="navbar-link">Visualizations ▾</a>
+                    <div class="dropdown-content">
+                        <a href="viz-line-chart.html" class="dropdown-link">
+                            📊 AQI Line Chart
+                        </a>
+                        <a href="viz-scatter-plot.html" class="dropdown-link">
+                            🔵 Scatter Plot
+                        </a>
+                        <a href="viz-heatmap.html" class="dropdown-link">
+                            🔥 Heatmap
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>🌱 AQI vs Energy Consumption Dashboard</h1>
+                <p class="dashboard-description">
+                    Explore the relationship between air quality and energy consumption patterns 
+                    across U.S. states. Use the visualizations below to discover correlations 
+                    and trends in the data.
+                </p>
+            </div>
+
+            <div class="dashboard-controls">
+                <div class="control-group">
+                    <label for="year-range-slider">Year Range:</label>
+                    <div class="year-range-display">
+                        <span id="year-start">1980</span> - <span id="year-end">2022</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="energy-type-filter">Energy Types:</label>
+                    <div class="energy-type-checkboxes">
+                        <label><input type="checkbox" value="coal" checked> Coal</label>
+                        <label><input type="checkbox" value="naturalGas" checked> Natural Gas</label>
+                        <label><input type="checkbox" value="nuclear" checked> Nuclear</label>
+                        <label><input type="checkbox" value="renewable" checked> Renewable</label>
+                        <label><input type="checkbox" value="petroleum" checked> Petroleum</label>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <button class="reset-btn" onclick="resetAQIEnergyFilters()">Reset Filters</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Geographic Map Visualization -->
+                <div class="viz-frame" id="map-container">
+                    <div class="viz-header">
+                        <div class="viz-title">🗺️ State-wise Energy & AQI Map</div>
+                        <div class="viz-controls">
+                            <button class="viz-control-btn" title="Toggle fullscreen">⛶</button>
+                            <button class="viz-control-btn" title="Download">💾</button>
+                        </div>
+                    </div>
+                    <div class="viz-content">
+                        <div class="placeholder-viz">
+                            <div class="placeholder-icon">🗺️</div>
+                            <h4>Interactive US Map</h4>
+                            <p>
+                                This will display a choropleth map showing AQI levels 
+                                and energy consumption by state. Click states to filter 
+                                other visualizations.
+                            </p>
+                            <div class="placeholder-features">
+                                <span class="feature-tag">Color-coded AQI</span>
+                                <span class="feature-tag">Bubble size = Energy use</span>
+                                <span class="feature-tag">Interactive selection</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scatter Plot Visualization -->
+                <div class="viz-frame" id="scatter-container">
+                    <div class="viz-header">
+                        <div class="viz-title">🔵 AQI vs Total Energy Scatter</div>
+                        <div class="viz-controls">
+                            <select class="viz-control-select">
+                                <option value="totalBTU">Total Energy</option>
+                                <option value="coal">Coal</option>
+                                <option value="naturalGas">Natural Gas</option>
+                                <option value="renewable">Renewable</option>
+                            </select>
+                            <button class="viz-control-btn" title="Toggle fullscreen">⛶</button>
+                        </div>
+                    </div>
+                    <div class="viz-content">
+                        <div class="placeholder-viz">
+                            <div class="placeholder-icon">🔵</div>
+                            <h4>Energy vs AQI Correlation</h4>
+                            <p>
+                                Scatter plot showing the relationship between energy 
+                                consumption and air quality index. Points represent 
+                                state-year combinations.
+                            </p>
+                            <div class="placeholder-features">
+                                <span class="feature-tag">Brushing & linking</span>
+                                <span class="feature-tag">Energy source toggle</span>
+                                <span class="feature-tag">Regression line</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parallel Coordinates Visualization -->
+                <div class="viz-frame" id="parallel-coords-container">
+                    <div class="viz-header">
+                        <div class="viz-title">📏 Multi-dimensional Analysis</div>
+                        <div class="viz-controls">
+                            <button class="viz-control-btn" title="Reorder axes">⇄</button>
+                            <button class="viz-control-btn" title="Toggle fullscreen">⛶</button>
+                        </div>
+                    </div>
+                    <div class="viz-content">
+                        <div class="placeholder-viz">
+                            <div class="placeholder-icon">📏</div>
+                            <h4>Parallel Coordinates</h4>
+                            <p>
+                                Multi-dimensional view of energy sources vs AQI. 
+                                Each line represents a state, showing patterns 
+                                across multiple energy types.
+                            </p>
+                            <div class="placeholder-features">
+                                <span class="feature-tag">Axis brushing</span>
+                                <span class="feature-tag">Line highlighting</span>
+                                <span class="feature-tag">Dimension reordering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Statistics Panel -->
+                <div class="viz-frame" id="summary-stats">
+                    <div class="viz-header">
+                        <div class="viz-title">📊 Summary Statistics</div>
+                        <div class="viz-controls">
+                            <button class="viz-control-btn" title="Export data">📋</button>
+                        </div>
+                    </div>
+                    <div class="viz-content">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">States Selected</div>
+                                <div class="stat-value" id="selected-states-count">4</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg AQI</div>
+                                <div class="stat-value" id="avg-aqi">--</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Total Energy (BTU)</div>
+                                <div class="stat-value" id="total-energy">--</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Correlation</div>
+                                <div class="stat-value" id="correlation">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 Air Quality & Energy Analysis Project</p>
+    </footer>
+
+    <!-- Include data and main JavaScript -->
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Initialize AQI vs Energy dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAQIEnergyDashboard();
+        });
+    </script>
+</body>
+</html> 

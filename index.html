@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Air Quality & Energy Consumption Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header class="banner">
+        <div class="banner-content">
+            <h1>🌪️ US Air Quality & Energy Consumption Dashboard</h1>
+            <p class="banner-subtitle">Exploring environmental trends across American states (1980-2022)</p>
+        </div>
+    </header>
+
+    <nav class="navbar-sticky">
+        <div class="navbar">
+            <ul class="navbar-links">
+                <li class="navbar-item">
+                    <a href="index.html" class="navbar-link active">Home</a>
+                </li>
+                <li class="navbar-item dropdown">
+                    <a href="#" class="navbar-link">Dashboards ▾</a>
+                    <div class="dropdown-content">
+                        <a href="dashboard-aqi-energy.html" class="dropdown-link">
+                            🌱 AQI vs Energy
+                        </a>
+                        <a href="dashboard-trends.html" class="dropdown-link">
+                            📈 Trends Analysis
+                        </a>
+                    </div>
+                </li>
+                <li class="navbar-item dropdown">
+                    <a href="#" class="navbar-link">Visualizations ▾</a>
+                    <div class="dropdown-content">
+                        <a href="viz-line-chart.html" class="dropdown-link">
+                            📊 AQI Line Chart
+                        </a>
+                        <a href="viz-scatter-plot.html" class="dropdown-link">
+                            🔵 Scatter Plot
+                        </a>
+                        <a href="viz-heatmap.html" class="dropdown-link">
+                            🔥 Heatmap
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="home-container">
+            <div class="research-questions">
+                <h2>Research Questions</h2>
+                
+                <div class="research-question">
+                    <div class="question-label">RQ1</div>
+                    <p>
+                        How did air-quality trends evolve alongside overall energy consumption 
+                        across U.S. states from 1980 to 2022?
+                    </p>
+                </div>
+                
+                <div class="research-question">
+                    <div class="question-label">RQ2</div>
+                    <p>
+                        Which energy sources correlate most strongly with AQI deterioration 
+                        or improvement?
+                    </p>
+                </div>
+            </div>
+
+            <div class="demo-charts">
+                <div class="viz-frame">
+                    <div class="viz-header">
+                        <div class="viz-title">📈 National Average AQI (1980-2022)</div>
+                        <div class="viz-controls">
+                            <button class="viz-control-btn" title="Expand">⛶</button>
+                        </div>
+                    </div>
+                    <div class="viz-content" id="demo-sparkline">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </div>
+
+                <div class="viz-frame">
+                    <div class="viz-header">
+                        <div class="viz-title">⚡ 2022 Energy Mix Distribution</div>
+                        <div class="viz-controls">
+                            <button class="viz-control-btn" title="Expand">⛶</button>
+                        </div>
+                    </div>
+                    <div class="viz-content" id="demo-energy-mix">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="getting-started">
+                <h3>Getting Started</h3>
+                <p>Explore the data through our interactive dashboards and individual visualizations:</p>
+                <div class="nav-grid">
+                    <a href="dashboard-aqi-energy.html" class="nav-card">
+                        <div class="nav-card-title">🌱 AQI vs Energy Dashboard</div>
+                        <div class="nav-card-desc">Linked visualizations comparing air quality and energy consumption</div>
+                    </a>
+                    <a href="dashboard-trends.html" class="nav-card">
+                        <div class="nav-card-title">📈 Trends Dashboard</div>
+                        <div class="nav-card-desc">Time-series analysis and trend exploration</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 Air Quality & Energy Analysis Project</p>
+    </footer>
+
+    <!-- Include data and main JavaScript -->
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Initialize home page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHomePage();
+        });
+    </script>
+</body>
+</html> 
